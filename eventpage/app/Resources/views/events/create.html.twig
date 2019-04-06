@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create{% endblock %}
+
+{% block body %}
+	<div class="pageheader">
+		<h1>Create a new Event</h1>
+		<hr>
+	</div>
+	<div class="container">
+		{{form_start(form)}}
+		{{form_widget(form)}}
+		{{form_end(form)}}
+	</div>
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		#nav2{
+			color: #fff!important;
+			border-bottom: 1px solid #fff;
+		}
+	</style>
+{% endblock %}
