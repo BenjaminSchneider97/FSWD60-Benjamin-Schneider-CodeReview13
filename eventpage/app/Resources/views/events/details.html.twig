@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Events{% endblock %}
+
+{% block body %}
+	<div class="pageheader">
+		<h1>More information for "<b>{{event.eventName}}</b>"</h1>
+		<hr>
+	</div>
+	<div class="container">
+		<a class="btn btn-info" href="/">Back to all Events</a>
+		<div class="detailview">
+			<div class="detailimage">
+				<img src="{{event.eventImage}}">
+			</div>
+			<div class="detailinfos">
+				<h3>{{event.eventName}}</h3>
+				<br>
+				<p><i class="fas fa-pencil-alt"></i>{{event.eventDescription}}</p>
+				<p><i class="fas fa-question"></i>{{event.eventType}}</p>
+				<p><i class="fas fa-map-marker-alt fasdesc"></i>{{event.eventAddress}}</p>
+				<p><i class="far fa-clock"></i>Start: {{event.eventStartDate|date('t F Y, G:i')}}</p>
+				<p><i class="far fa-clock"></i>End: {{event.eventEndDate|date('t F Y, G:i')}}</p>
+				<p><i class="fas fa-envelope"></i>{{event.eventContactEmail}}</p>
+				<p><i class="fas fa-phone"></i>{{event.eventContactNumber}}</p>
+				<p><i class="fas fa-globe-europe fasdesc"></i><a target="_blank" href="{{event.eventWebAddress}}">{{event.eventWebAddress}}</a></p>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="../css/style.css">
+{% endblock %}
+
+
+
+
+
+
