@@ -44,8 +44,8 @@
                 ->add('eventdescription', TextareaType::class, array('attr' => array('class'=>'form-control', 'maxlength'=>'200', 'style'=>'margin-bottom:15px')))
                 ->add('eventtype', ChoiceType::class, array('choices'=>array('Music'=>'Music', 'Museum'=>'Museum', 'Theater'=>'Theater', 'Sports'=>'Sports', 'Festival'=>'Festival'),'attr' => array('class'=> 'form-control', 'style'=>'margin-bottom:15px')))
                 ->add('eventaddress', TextType::class, array('attr' => array('class'=>'form-control', 'style'=>'margin-bottom:15px')))
-                ->add('eventstartdate', DateTimeType::class, array('attr' => array('class'=>'form-control date', 'style'=>'margin-bottom:15px')))
-                ->add('eventenddate', DateTimeType::class, array('attr' => array('class'=>'form-control date', 'style'=>'margin-bottom:15px')))
+                ->add('eventstartdate', DateTimeType::class, array('widget' => 'single_text', 'attr' => array('class'=>'form-control date', 'style'=>'margin-bottom:15px')))
+                ->add('eventenddate', DateTimeType::class, array('widget' => 'single_text', 'attr' => array('class'=>'form-control date', 'style'=>'margin-bottom:15px')))
                 ->add('eventcontactemail', TextType::class, array('attr' => array('class'=>'form-control', 'style'=>'margin-bottom:15px')))
                 ->add('eventcontactnumber', TextType::class, array('attr' => array('class'=>'form-control', 'style'=>'margin-bottom:15px')))
                 ->add('eventwebaddress', TextType::class, array('attr' => array('class'=>'form-control', 'style'=>'margin-bottom:15px')))
@@ -114,8 +114,8 @@
                 ->add('eventdescription', TextareaType::class, array('attr' => array('class'=>'form-control', 'maxlength'=>'200', 'style'=>'margin-bottom:15px')))
                 ->add('eventtype', ChoiceType::class, array('choices'=>array('Music'=>'Music', 'Museum'=>'Museum', 'Theater'=>'Theater', 'Sports'=>'Sports', 'Festival'=>'Festival'),'attr' => array('class'=> 'form-control', 'style'=>'margin-bottom:15px')))
                 ->add('eventaddress', TextType::class, array('attr' => array('class'=>'form-control', 'style'=>'margin-bottom:15px')))
-                ->add('eventstartdate', DateTimeType::class, array('attr' => array('class'=>'form-control date', 'style'=>'margin-bottom:15px')))
-                ->add('eventenddate', DateTimeType::class, array('attr' => array('class'=>'form-control date', 'style'=>'margin-bottom:15px')))
+                ->add('eventstartdate', DateTimeType::class, array('widget' => 'single_text', 'attr' => array('class'=>'form-control date', 'style'=>'margin-bottom:15px')))
+                ->add('eventenddate', DateTimeType::class, array('widget' => 'single_text', 'attr' => array('class'=>'form-control date', 'style'=>'margin-bottom:15px')))
                 ->add('eventcontactemail', TextType::class, array('attr' => array('class'=>'form-control', 'style'=>'margin-bottom:15px')))
                 ->add('eventcontactnumber', TextType::class, array('attr' => array('class'=>'form-control', 'style'=>'margin-bottom:15px')))
                 ->add('eventwebaddress', TextType::class, array('attr' => array('class'=>'form-control', 'style'=>'margin-bottom:15px')))
@@ -178,84 +178,12 @@
         }
 
         /**
-        * @Route("/sort/Festival", name="sort_event_festival")
+        * @Route("/sort/{sort}", name="sort_event_festival")
         */
-        public function sortFestivalAction(Request $request){
+        public function sortEventAction(Request $request, $sort){
 
-            $em = $this->getDoctrine()->getManager();
-            $connection = $em->getConnection();
-            $statement = $connection->prepare("SELECT * FROM `events` WHERE eventType = 'Festival'");
-            $statement->bindValue('id', 123);
-            $statement->execute();
-            $results = $statement->fetchAll();
-
-
-            return $this->render('events/sort.html.twig', array('events'=>$results));
-        }
-
-        /**
-        * @Route("/sort/Museum", name="sort_event_museum")
-        */
-        public function sortMuseumAction(Request $request){
-
-            $em = $this->getDoctrine()->getManager();
-            $connection = $em->getConnection();
-            $statement = $connection->prepare("SELECT * FROM `events` WHERE eventType = 'Museum'");
-            $statement->bindValue('id', 123);
-            $statement->execute();
-            $results = $statement->fetchAll();
-
-
-            return $this->render('events/sort.html.twig', array('events'=>$results));
-
-        }
-
-        /**
-        * @Route("/sort/Music", name="sort_event_music")
-        */
-        public function sortMusicAction(Request $request){
-
-            $em = $this->getDoctrine()->getManager();
-            $connection = $em->getConnection();
-            $statement = $connection->prepare("SELECT * FROM `events` WHERE eventType = 'Music'");
-            $statement->bindValue('id', 123);
-            $statement->execute();
-            $results = $statement->fetchAll();
-
-
-            return $this->render('events/sort.html.twig', array('events'=>$results));
-        }
-
-        /**
-        * @Route("/sort/Sports", name="sort_event_sports")
-        */
-        public function sortSportsAction(Request $request){
-
-            $em = $this->getDoctrine()->getManager();
-            $connection = $em->getConnection();
-            $statement = $connection->prepare("SELECT * FROM `events` WHERE eventType = 'Sports'");
-            $statement->bindValue('id', 123);
-            $statement->execute();
-            $results = $statement->fetchAll();
-
-
-            return $this->render('events/sort.html.twig', array('events'=>$results));
-        }
-
-        /**
-        * @Route("/sort/Theater", name="sort_event_theater")
-        */
-        public function sortTheaterAction(Request $request){
-
-            $em = $this->getDoctrine()->getManager();
-            $connection = $em->getConnection();
-            $statement = $connection->prepare("SELECT * FROM `events` WHERE eventType = 'Theater'");
-            $statement->bindValue('id', 123);
-            $statement->execute();
-            $results = $statement->fetchAll();
-
-
-            return $this->render('events/sort.html.twig', array('events'=>$results));
+            $events = $this->getDoctrine()->getRepository('AppBundle:events')->findByEventType($sort);
+            return $this->render('events/sort.html.twig', array('events'=>$events, 'type' => $sort));
         }
     }
     
